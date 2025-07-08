@@ -10,6 +10,7 @@ jobs:
     uses: nsbno/platform-actions/.github/workflows/helpers.find-changes.terraform.yml@main
     secrets: inherit
     with:
+      skip-service-environment: true
       working-directory: './lambda-function'
 
   build:
@@ -31,7 +32,7 @@ jobs:
   deploy:
     needs:
       - package
-#      - terraform-changes
+      - terraform-changes
     uses: nsbno/platform-actions/.github/workflows/deployment.all-environments.yml@main
     secrets: inherit
     if: '!cancelled() && !contains(needs.*.results, ''failure'') && success()'
