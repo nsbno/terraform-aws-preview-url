@@ -39,3 +39,4 @@ jobs:
       applications: preview-url-mapper
       terraform-changes: ${{ needs.terraform-changes.outputs.has-changes }}
       working-directory: './lambda-function'
+      skip-service-environment: true
