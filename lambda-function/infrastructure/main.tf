@@ -24,7 +24,8 @@ module "lambda" {
   artifact      = local.artifact
   artifact_type = "s3"
 
-  handler = "${local.service_name}.handler.get_preview_url_by_domain"
+  # Name correspond to built artifact
+  handler = "preview_url_mapper.handler.get_preview_url_by_domain"
   runtime = "python3.13"
 
   memory = 256
