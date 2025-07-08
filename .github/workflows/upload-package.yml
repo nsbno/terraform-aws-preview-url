@@ -24,7 +24,7 @@ jobs:
     needs: build
     with:
       aws-region: 'us-east-1'
-      s3-bucket-name: '${{ vars.AWS_ACCOUNT_ID }}-lambda-at-edge-artifacts'
+      s3-bucket-name: '727832596008-lambda-at-edge-artifacts'
       application-name: 'preview-url-mapper'
       artifact-name: ${{ needs.build.outputs.artifact-name }}
 
