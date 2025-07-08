@@ -8,7 +8,6 @@ dependencies = [
     "pynamodb>=6.1.0",
 ]
 
-packages = [
-    { include = "preview_url_mapper" },
-    { include = "handler.py" }
-]
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["*"]

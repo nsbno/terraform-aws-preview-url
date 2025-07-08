@@ -51,7 +51,7 @@ wheels = [
 [[package]]
 name = "preview-url-mapper"
 version = "0.1.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "boto3" },
     { name = "pydantic" },
