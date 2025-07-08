@@ -33,11 +33,7 @@ resource "aws_lambda_permission" "allow_org_invoke" {
   principal     = "*"
   qualifier     = module.lambda.function_qualifier
 
-  condition {
-    test     = "StringEquals"
-    variable = "aws:PrincipalOrgID"
-    values   = [data.aws_organizations_organization.this.id]
-  }
+  principal_org_id = data.aws_organizations_organization.this.id
 }
 
 module "dynamodb" {
