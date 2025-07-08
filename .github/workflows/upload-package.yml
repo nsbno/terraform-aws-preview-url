@@ -6,11 +6,11 @@ on:
 name: CI/CD
 
 jobs:
-#  terraform-changes:
-#    uses: nsbno/platform-actions/.github/workflows/helpers.find-changes.terraform.yml@main
-#    secrets: inherit
-#    with:
-#      working-directory: './lambda-function'
+  terraform-changes:
+    uses: nsbno/platform-actions/.github/workflows/helpers.find-changes.terraform.yml@main
+    secrets: inherit
+    with:
+      working-directory: './lambda-function'
 
   build:
     uses: nsbno/platform-actions/.github/workflows/build.python.yml@main

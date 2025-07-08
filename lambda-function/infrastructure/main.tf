@@ -1,24 +1,30 @@
 locals {
   service_name = "preview-url-mapper"
+
+  lambda_at_edge_artifact_bucket = "727832596008-lambda-at-edge-artifacts"
+  s3_artifact_path = "${local.service_name}/main.zip"
+
+  artifact = {
+	store = local.lambda_at_edge_artifact_bucket
+	path    = local.s3_artifact_path
+	version = data.aws_s3_object.latest_artifact.version_id
+  }
 }
 
-data "vy_artifact_version" "this" {
-  application = local.service_name
+data "aws_s3_object" "latest_artifact" {
+  bucket = local.lambda_at_edge_artifact_bucket
+  key    = local.s3_artifact_path
 }
 
 module "lambda" {
   source = "github.com/nsbno/terraform-aws-lambda?ref=codedeploy"
 
-  providers = {
-    aws = aws.us-east-1
-  }
-
   service_name = local.service_name
 
-  artifact      = data.vy_artifact_version.this
+  artifact      = local.artifact
   artifact_type = "s3"
 
-  handler = "get_preview_url_by_domain"
+  handler = "${local.service_name}.handler.get_preview_url_by_domain"
   runtime = "python3.13"
 
   memory = 256
@@ -38,10 +44,6 @@ resource "aws_lambda_permission" "allow_org_invoke" {
 
 module "dynamodb" {
   source = "github.com/nsbno/terraform-aws-dynamodb?ref=1.0.3"
-
-  providers = {
-    aws = aws.us-east-1
-  }
 
   table_name = "${local.service_name}-table"
   hash_key   = "domain"
