@@ -1,0 +1,14 @@
+[project]
+name = "preview-url-mapper"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3>=1.39.3",
+    "pydantic>=2.11.7",
+    "pynamodb>=6.1.0",
+]
+
+packages = [
+    { include = "preview_url_mapper" },
+    { include = "handler.py" }
+]
