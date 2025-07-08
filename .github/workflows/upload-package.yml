@@ -10,7 +10,6 @@ jobs:
     uses: nsbno/platform-actions/.github/workflows/helpers.find-changes.terraform.yml@main
     secrets: inherit
     with:
-      skip-service-environment: true
       working-directory: './lambda-function'
 
   build:
@@ -25,7 +24,7 @@ jobs:
     needs: build
     with:
       aws-region: 'us-east-1'
-      s3-bucket-name: '727832596008-lambda-at-edge-artifacts'
+      s3-bucket-name: '727832596008-lambda-at-edge-preview-mapper'
       application-name: 'preview-url-mapper'
       artifact-name: ${{ needs.build.outputs.artifact-name }}
 
@@ -40,4 +39,4 @@ jobs:
       applications: preview-url-mapper
       terraform-changes: ${{ needs.terraform-changes.outputs.has-changes }}
       working-directory: './lambda-function'
-      skip-service-environment: true
+      has-application-changes: false  # Only deploy terraform
