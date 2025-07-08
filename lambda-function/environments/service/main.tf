@@ -1,3 +1,14 @@
+terraform {
+  backend "s3" {
+	key            = "preview-url-mapper/main.tfstate"
+	bucket         = "727832596008-terraform-state"
+	acl            = "bucket-owner-full-control"
+	encrypt        = "true"
+	kms_key_id     = "arn:aws:kms:eu-west-1:727832596008:alias/727832596008-terraform-state-encryption-key"
+	region         = "eu-west-1"
+  }
+}
+
 locals {
   test_account_id    = "846274634169"
   stage_account_id   = "974021908697"
