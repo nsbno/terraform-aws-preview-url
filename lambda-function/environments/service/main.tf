@@ -5,12 +5,10 @@ locals {
   service_account_id = "727832596008"
 }
 
-data "aws_caller_identity" "this" {}
-
 resource "aws_s3_bucket" "this" {
   region = "us-east-1" # Required for Lambda@Edge artifacts
 
-  bucket = "${data.aws_caller_identity.this}-lambda-at-edge-artifacts"
+  bucket = "${local.service_account_id}-lambda-at-edge-artifacts"
 }
 
 resource "aws_s3_bucket_versioning" "artifacts" {
