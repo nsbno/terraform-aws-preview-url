@@ -7,7 +7,8 @@ from preview_url_mapper.ports.preview_url_repository import PreviewUrlRepository
 
 
 class DynamoDBPreviewUrlAdapter(PreviewUrlRepository):
-    def __init__(self, table_name: str, region='eu-west-1') -> None:
+    # us-east-1 for the same region as Lambda@Edge function
+    def __init__(self, table_name: str, region='us-east-1') -> None:
         self.table_name = table_name
         self.region = region
 
