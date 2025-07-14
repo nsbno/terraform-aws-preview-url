@@ -4,7 +4,6 @@ locals {
   # Mapping of environment to central deployment account ID
   central_deployment_account_id_mapping = {
     "prod"    = "433462727137"
-    "stage"   = "974021908697"
     "test"    = "846274634169"
     "service" = "727832596008"
   }
