@@ -24,10 +24,12 @@ class DynamoDBPreviewUrlAdapter(PreviewUrlRepository):
 
         self.PreviewUrlModel = PreviewUrlModel
 
-    def get_preview_url(self, pr_number: int, domain: str) -> str:
+    def get_preview_url(self, pr_number: str, domain: str) -> str:
         try:
-            apprunner_host = self.PreviewUrlModel.get(domain).apprunner_host
+            apprunner_host = self.PreviewUrlModel.get(hash_key=domain).apprunner_host
             return apprunner_host
         except self.PreviewUrlModel.DoesNotExist:
             print("Preview URL not found in DynamoDB for domain:", domain)
             raise ValueError(f"No preview URL found for domain: {domain}")
+        except Exception as e:
+            raise ValueError(f"Error: {str(e)}") from e
