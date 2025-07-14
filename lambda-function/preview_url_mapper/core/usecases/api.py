@@ -29,6 +29,7 @@ class HandleApiRequest(BaseModel):
         request['origin'] = {
             'custom': {
                 'domainName': apprunner_host,
+                'port': 443,
             }
         }
         # Forward the correct Host header
