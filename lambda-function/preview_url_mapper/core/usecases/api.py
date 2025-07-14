@@ -12,6 +12,9 @@ class HandleApiRequest(BaseModel):
         host = headers['host'][0]['value']  # e.g., pr-123.example.com
         subdomain = host.split('.')[0]  # 'pr-123'
 
+        if not subdomain.startswith('pr-'):
+            return request
+
         try:
             apprunner_host = self.get_preview_url_by_domain.execute(domain=host, pr_id=subdomain)
         except ValueError as e:

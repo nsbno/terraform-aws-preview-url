@@ -11,13 +11,10 @@ class GetPreviewUrlByDomain(BaseModel):
     instrumentation: LoggingInstrumentation
 
     def execute(self, domain: str, pr_id: str) -> str:
-        if not pr_id.startswith("pr-"):
-            self.instrumentation.failing_domain_name(domain=domain, pr_id=pr_id)
-            raise ValueError("Domain must start with 'pr-'.")
-
-        preview_url_host = self.preview_url_repository.get_preview_url(domain=domain, pr_id=pr_id)
-        if not preview_url_host:
-            self.instrumentation.does_not_exist(domain=domain, pr_id=pr_id)
+        try:
+            preview_url_host = self.preview_url_repository.get_preview_url(domain=domain, pr_id=pr_id)
+        except Exception as e:
+            self.instrumentation.does_not_exist(domain=domain, pr_id=pr_id, exception=e)
             raise ValueError(f"No preview URL found for domain: {domain}")
 
         return preview_url_host

@@ -11,10 +11,12 @@ class LoggingInstrumentation(BaseModel):
 
     def failing_domain_name(self, domain: str, pr_id: str) -> None:
         self.logger.error(
-            f"Invalid domain name: {domain} or PR ID {pr_id} format. Does not start with 'pr-'"
+            f"Invalid domain name: {domain} or PR ID {pr_id} format. Does not start with 'pr-'",
+            extra={"domain": domain, "pr_id": pr_id}
         )
 
-    def does_not_exist(self, domain: str, pr_id: str) -> None:
+    def does_not_exist(self, domain: str, pr_id: str, exception: Exception) -> None:
         self.logger.error(
-            f"Preview URL with {domain} does not exist for PR ID: {pr_id}"
+            f"Preview URL with {domain} does not exist for PR ID: {pr_id}",
+            extra={"domain": domain, "pr_id": pr_id, "exception": str(exception)}
         )
