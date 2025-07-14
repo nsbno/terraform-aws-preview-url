@@ -44,7 +44,7 @@ locals {
 module "dynamodb" {
   source = "github.com/nsbno/terraform-aws-dynamodb?ref=1.0.3"
 
-  table_name = "${local.service_name}-table"
+  table_name = "platform-${local.service_name}"
   hash_key   = "domain"
 
   ttl_enabled   = true
