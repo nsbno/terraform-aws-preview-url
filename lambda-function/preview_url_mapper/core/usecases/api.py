@@ -32,6 +32,8 @@ class HandleApiRequest(BaseModel):
                 'port': 443,
                 'protocol': 'https',
                 'sslProtocols': ['TLSv1.2'],
+                'readTimeout': 5,
+                'keepaliveTimeout': 5,
             }
         }
         # Forward the correct Host header
