@@ -10,3 +10,5 @@ get_preview_url_by_domain = HandleApiRequest(
     get_preview_url_by_domain=GetPreviewUrlByDomain(preview_url_mapper=preview_url_repository)
 )
 
+preview_url_handler = get_preview_url_by_domain.handler
+
