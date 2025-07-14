@@ -7,7 +7,7 @@ from preview_url_mapper.instrumentation import LoggingInstrumentation
 from pythonjsonlogger import jsonlogger
 
 # Configure a standard Python logger
-logger = logging.getLogger("preview_url_mapper")
+logger = logging.getLogger(__name__)
 handler = logging.StreamHandler()
 formatter = jsonlogger.JsonFormatter()
 handler.setFormatter(formatter)
