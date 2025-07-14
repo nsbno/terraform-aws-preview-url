@@ -1,10 +1,12 @@
 from logging import Logger
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 from vy_lambda_tools.instrumentation import JsonLogger
 
 
 class LoggingInstrumentation(BaseModel):
+    model_config = ConfigDict(arbitrary_types_allowed=True)
+
     logger: JsonLogger | Logger
 
     def failing_domain_name(self, domain: str, pr_id: str) -> None:
