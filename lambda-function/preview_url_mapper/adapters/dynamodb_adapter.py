@@ -24,7 +24,7 @@ class DynamoDBPreviewUrlAdapter(PreviewUrlRepository):
 
         self.PreviewUrlModel = PreviewUrlModel
 
-    def get_preview_url(self, pr_number: str, domain: str) -> str:
+    def get_preview_url(self, domain: str, pr_id: str) -> str:
         try:
             apprunner_host = self.PreviewUrlModel.get(hash_key=domain).apprunner_host
             return apprunner_host
