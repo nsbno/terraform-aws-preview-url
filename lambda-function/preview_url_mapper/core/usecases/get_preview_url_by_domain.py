@@ -15,6 +15,6 @@ class GetPreviewUrlByDomain(BaseModel):
             preview_url_host = self.preview_url_repository.get_preview_url(domain=domain, pr_id=pr_id)
         except Exception as e:
             self.instrumentation.does_not_exist(domain=domain, pr_id=pr_id, exception=e)
-            raise ValueError(f"No preview URL found for domain: {domain}")
+            raise ValueError(f"Exception: {str(e)}") from e
 
         return preview_url_host
