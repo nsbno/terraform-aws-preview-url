@@ -14,7 +14,7 @@ terraform {
 }
 
 provider "aws" {
-  region = "us-east-1"  # lambda@edge
+  region = "us-east-1" # lambda@edge
 
   default_tags {
     tags = {
