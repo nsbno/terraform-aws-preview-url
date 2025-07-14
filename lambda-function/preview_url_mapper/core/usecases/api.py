@@ -30,6 +30,8 @@ class HandleApiRequest(BaseModel):
             'custom': {
                 'domainName': apprunner_host,
                 'port': 443,
+                'protocol': 'https',
+                'sslProtocols': ['TLSv1.2'],
             }
         }
         # Forward the correct Host header
