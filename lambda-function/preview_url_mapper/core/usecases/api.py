@@ -14,12 +14,12 @@ class HandleApiRequest(BaseModel):
 
         try:
             apprunner_host = self.get_preview_url_by_domain.execute(domain=host, pr_id=subdomain)
-        except ValueError:
+        except ValueError as e:
             # Return 404 if subdomain not found
             return {
                 'status': '404',
                 'statusDescription': 'Not Found',
-                'body': f'No preview environment found for {host}'
+                'body': f'error: {str(e)}',
             }
 
         # Set the origin to the App Runner service
