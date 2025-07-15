@@ -10,7 +10,8 @@ class DynamoDBPreviewUrlAdapter(PreviewUrlRepository):
             region: str = 'us-east-1'
     ) -> None:
         self.dynamodb = boto3.resource('dynamodb', region_name=region)
-        self.ssm_client = boto3.client('ssm', region_name=region)
+        # SSM parameter is in the eu-west-1 region
+        self.ssm_client = boto3.client('ssm', region_name="eu-west-1")
         self.response = self.ssm_client.get_parameter(
             Name=f"/__deployment__/applications/lambda-at-edge/preview-url-mapper/environment-account-id"
         )
