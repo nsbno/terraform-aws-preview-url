@@ -22,13 +22,25 @@ locals {
 
 resource "aws_ssm_parameter" "environment" {
   # Current environment version of the lambda to use
-  provider = aws.us_east_1
-  name  = "/__deployment__/applications/lambda-at-edge/${local.service_name}/environment-account-id"
-  type  = "String"
+  name = "/__deployment__/applications/lambda-at-edge/${local.service_name}/environment-account-id"
+  type = "String"
 
   overwrite = true
 
   value = local.central_deployment_account_id_mapping[var.environment]
+}
+
+module "ssm_environment_version_permissions" {
+  source = "github.com/nsbno/terraform-aws-service-permissions?ref=1.2.0"
+
+  role_name = aws_iam_role.lambda_role.name
+
+  ssm_parameters = [
+    {
+      arns        = [aws_ssm_parameter.environment.arn]
+      permissions = ["get"]
+    }
+  ]
 }
 
 data "aws_s3_object" "latest_artifact" {
