@@ -136,7 +136,7 @@ module "centralized_ddb_mapping_permissions" {
 resource "aws_iam_role" "app_runner_service_role" {
   provider = aws.us_east_1
 
-  name = "${local.service_name}-app-runner-service-role"
+  name = "${var.service_name}-app-runner-service-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
@@ -162,7 +162,7 @@ resource "aws_iam_role_policy_attachment" "app_runner_service_policy" {
 resource "aws_iam_role" "app_runner_instance_role" {
   provider = aws.us_east_1
 
-  name = "${local.service_name}-app-runner-instance-role"
+  name = "${var.service_name}-app-runner-instance-role"
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17",
