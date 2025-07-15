@@ -20,6 +20,17 @@ locals {
   }
 }
 
+resource "aws_ssm_parameter" "environment" {
+  # Current environment version of the lambda to use
+  provider = aws.us_east_1
+  name  = "/__deployment__/applications/lambda-at-edge/${local.service_name}/environment-account-id"
+  type  = "String"
+
+  overwrite = true
+
+  value = local.central_deployment_account_id_mapping[var.environment]
+}
+
 data "aws_s3_object" "latest_artifact" {
   provider = aws.us_east_1
 

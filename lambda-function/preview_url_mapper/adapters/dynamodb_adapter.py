@@ -7,10 +7,14 @@ class DynamoDBPreviewUrlAdapter(PreviewUrlRepository):
     def __init__(
             self,
             table_name: str,
-            region: str = 'us-east-1',
-            account_id: str = "846274634169"  # vydeployment-test
+            region: str = 'us-east-1'
     ) -> None:
         self.dynamodb = boto3.resource('dynamodb', region_name=region)
+        self.ssm_client = boto3.client('ssm', region_name=region)
+        self.response = self.ssm_client.get_parameter(
+            Name=f"/__deployment__/applications/lambda-at-edge/preview-url-mapper/environment-account-id"
+        )
+        account_id = self.response['Parameter']['Value']
 
         self.table_arn = f"arn:aws:dynamodb:{region}:{account_id}:table/{table_name}"
         self.table = self.dynamodb.Table(name=self.table_arn)
