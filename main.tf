@@ -125,21 +125,23 @@ resource "aws_lambda_function" "lambda_function" {
 
   role = aws_iam_role.lambda_role.arn
 
-  logging_config {
-    log_group  = "/aws/lambda/${local.service_name}"
-    log_format = "JSON"
-  }
-
   publish = true
+
+  lifecycle {
+    ignore_changes = [
+      qualified_arn,
+      qualified_invoke_arn,
+      version
+    ]
+  }
 }
 
-# Lambda Alias
-resource "aws_lambda_alias" "lambda_alias" {
-  provider = aws.us_east_1
-
-  name             = "active"
-  function_name    = aws_lambda_function.lambda_function.function_name
-  function_version = aws_lambda_function.lambda_function.version
+data "aws_lambda_function" "this" {
+  # We use this data source to find the latest version of the Lambda
+  # Encountered issues with the `publish` argument in the `aws_lambda_function` resource
+  # Where it would update the Terraform code even without any code changes
+  provider      = aws.us_east_1
+  function_name = aws_lambda_function.lambda_function.function_name
 }
 
 module "centralized_ddb_mapping_permissions" {
