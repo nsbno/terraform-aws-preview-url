@@ -13,7 +13,7 @@ class DynamoDBPreviewUrlAdapter(PreviewUrlRepository):
         # SSM parameter is in the eu-west-1 region
         self.ssm_client = boto3.client('ssm', region_name="eu-west-1")
         self.response = self.ssm_client.get_parameter(
-            Name=f"/__deployment__/applications/lambda-at-edge/preview-url-mapper/environment-account-id"
+            Name=f"/__deployment__/applications/preview-url-mapper/central-deployment-account-id"
         )
         account_id = self.response['Parameter']['Value']
 

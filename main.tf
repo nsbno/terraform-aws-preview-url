@@ -22,7 +22,7 @@ locals {
 
 resource "aws_ssm_parameter" "central_deployment_account_id" {
   # Current environment version of the lambda to use
-  name = "/__deployment__/applications/${var.service_name}/central-deployment-account-id"
+  name = "/__deployment__/applications/preview-url-mapper/central-deployment-account-id"
   type = "String"
 
   overwrite = true
