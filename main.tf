@@ -214,7 +214,7 @@ module "permissions_app_runner_instance_role" {
 
   dynamodb_tables = [
     {
-      arns        = [var.dynamodb_sessions_table_arn]
+      arns        = [var.dynamodb_sessions_table_arn, "${var.dynamodb_sessions_table_arn}/*"]
       permissions = ["get", "put", "delete"]
     }
   ]
