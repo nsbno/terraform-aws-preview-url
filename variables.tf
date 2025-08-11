@@ -24,9 +24,3 @@ variable "service_name" {
   description = "The name of the service, should be same as the service name in the GHA Pipeline"
   type        = string
 }
-
-variable "dynamodb_sessions_table_arn" {
-  description = "The ARN of the DynamoDB table for sessions. If you want to share DDB user sessions to preview envs."
-  type        = string
-  default     = null
-}

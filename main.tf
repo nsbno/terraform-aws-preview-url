@@ -202,20 +202,3 @@ resource "aws_iam_role" "app_runner_instance_role" {
     ]
   })
 }
-
-# Used for App Runner tasks to access the DynamoDB table for session management.
-# Useful if you want to share session state across multiple App Runner instances and the "real" ECS instances.
-module "permissions_app_runner_instance_role" {
-  source = "github.com/nsbno/terraform-aws-service-permissions?ref=1.2.0"
-
-  count = var.dynamodb_sessions_table_arn != null ? 1 : 0
-
-  role_name = aws_iam_role.app_runner_instance_role.name
-
-  dynamodb_tables = [
-    {
-      arns        = [var.dynamodb_sessions_table_arn, "${var.dynamodb_sessions_table_arn}/*"]
-      permissions = ["get", "put", "delete"]
-    }
-  ]
-}
