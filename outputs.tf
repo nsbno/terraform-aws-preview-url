@@ -13,3 +13,7 @@ output "lambda_role_name" {
 output "lambda_role_arn" {
   value = aws_iam_role.lambda_role.arn
 }
+
+output "preview_instance_iam_role_name" {
+  value = aws_iam_role.app_runner_instance_role.name
+}
