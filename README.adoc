@@ -23,9 +23,6 @@ module "preview_url" {
   }
 
   service_name = "infrademo-demo-app"
-
-  # Optional, if you want to share session with the main test session.
-  dynamodb_sessions_table_arn = aws_dynamodb_table.sessions.arn
 }
 ----
 
