@@ -202,3 +202,28 @@ resource "aws_iam_role" "app_runner_instance_role" {
     ]
   })
 }
+
+data "aws_iam_policy_document" "ssm_parameters_env_vars" {
+  # This policy allows App Runner tasks to access SSM parameters
+  statement {
+    effect = "Allow"
+
+    actions = [
+      "ssm:GetParameter",
+      "ssm:GetParameters",
+      "ssm:GetParametersByPath",
+      "ssm:DescribeParameters",
+    ]
+
+    resources = [
+      "*"
+    ]
+  }
+}
+
+resource "aws_iam_role_policy" "app_runner_ssm_env_vars" {
+  role = aws_iam_role.app_runner_instance_role.id
+  name = "${var.service_name}-app-runner-ssm-env-vars"
+
+  policy = data.aws_iam_policy_document.ssm_parameters_env_vars.json
+}
