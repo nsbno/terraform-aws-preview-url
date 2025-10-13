@@ -1,5 +1,5 @@
 locals {
-  service_name = "preview-url-mapper"
+  central_lambda_name = "preview-url-mapper"
 
   # Mapping of environment to central deployment account ID
   central_deployment_account_id_mapping = {
@@ -9,9 +9,9 @@ locals {
   }
 
   lambda_at_edge_artifact_bucket = "${local.central_deployment_account_id_mapping.service}-lambda-at-edge-preview-mapper"
-  s3_artifact_path               = "${local.service_name}/main.zip"
+  s3_artifact_path               = "${local.central_lambda_name}/main.zip"
 
-  dynamodb_table_name = "platform-${local.service_name}"
+  dynamodb_table_name = "platform-${local.central_lambda_name}"
 
   artifact = {
     store   = local.lambda_at_edge_artifact_bucket
@@ -70,7 +70,7 @@ data "aws_iam_policy_document" "lambda_assume_role_policy" {
 resource "aws_iam_role" "lambda_role" {
   provider = aws.us_east_1
 
-  name               = "platform-${local.service_name}-lambda"
+  name               = "platform-${var.service_name}-lambda"
   assume_role_policy = data.aws_iam_policy_document.lambda_assume_role_policy.json
 }
 
@@ -103,7 +103,7 @@ resource "aws_iam_role_policy" "lambda_logging" {
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
   provider = aws.us_east_1
 
-  name              = "/aws/lambda/${local.service_name}"
+  name              = "/aws/lambda/${var.service_name}"
   retention_in_days = 30
 }
 
@@ -111,7 +111,7 @@ resource "aws_cloudwatch_log_group" "lambda_log_group" {
 resource "aws_lambda_function" "lambda_function" {
   provider = aws.us_east_1
 
-  function_name = local.service_name
+  function_name = "${var.service_name}-${local.central_lambda_name}"
 
   s3_bucket         = local.artifact.store
   s3_key            = local.artifact.path
