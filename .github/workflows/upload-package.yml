@@ -13,7 +13,7 @@ jobs:
       working-directory: './lambda-function'
 
   package:
-    uses: nsbno/platform-actions/.github/workflows/package.s3.yml@v2
+    uses: ./.github/workflows/custom-package.yml
     secrets: inherit
     needs: build
     with:
