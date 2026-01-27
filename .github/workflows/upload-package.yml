@@ -6,12 +6,6 @@ on:
 name: CI/CD
 
 jobs:
-  terraform-changes:
-    uses: nsbno/platform-actions/.github/workflows/helpers.find-changes.terraform.yml@v2
-    secrets: inherit
-    with:
-      working-directory: './lambda-function'
-
   build:
     uses: nsbno/platform-actions/.github/workflows/build.python.yml@v2
     secrets: inherit
@@ -30,10 +24,8 @@ jobs:
   deploy:
     needs:
       - package
-      - terraform-changes
     uses: nsbno/platform-actions/.github/workflows/deployment.all-environments-terraform.yml@v2
     secrets: inherit
     if: '!cancelled() && !contains(needs.*.results, ''failure'') && success()'
     with:
-      terraform-changes: ${{ needs.terraform-changes.outputs.has-changes }}
       working-directory: './lambda-function'
