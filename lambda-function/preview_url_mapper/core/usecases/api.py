@@ -32,7 +32,7 @@ class HandleApiRequest(BaseModel):
                 'port': 443,
                 'protocol': 'https',
                 'sslProtocols': ['TLSv1.2'],
-                'readTimeout': 5,
+                'readTimeout': 30,
                 'keepaliveTimeout': 5,
             }
         }
