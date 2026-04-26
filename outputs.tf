@@ -17,3 +17,15 @@ output "lambda_role_arn" {
 output "preview_instance_iam_role_name" {
   value = aws_iam_role.app_runner_instance_role.name
 }
+
+output "preview_service_iam_role_name" {
+  value = aws_iam_role.ecs_execution.name
+}
+
+output "preview_ecs_task_execution_role_name" {
+  value = aws_iam_role.ecs_execution.name
+}
+
+output "preview_ecs_infrastructure_role_name" {
+  value = aws_iam_role.ecs_infrastructure.name
+}
