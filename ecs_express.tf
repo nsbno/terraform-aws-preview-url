@@ -1,6 +1,5 @@
 
 resource "aws_iam_role" "ecs_execution" {
-
   name = "${var.service_name}-preview-ecs-execution"
 
   assume_role_policy = jsonencode({
@@ -68,4 +67,22 @@ resource "aws_iam_role" "ecs_infrastructure" {
 resource "aws_iam_role_policy_attachment" "ecs_infrastructure" {
   role       = aws_iam_role.ecs_infrastructure.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSInfrastructureRoleforExpressGatewayServices"
+}
+
+resource "aws_iam_role" "ecs_task_role" {
+  name = "${var.service_name}-preview-ecs-task"
+  description = "Role used by the running ECS service to get access to other AWS services"
+
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action = "sts:AssumeRole",
+        Effect = "Allow",
+        Principal = {
+          Service = "ecs-tasks.amazonaws.com"
+        }
+      }
+    ]
+  })
 }

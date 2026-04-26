@@ -29,3 +29,8 @@ output "preview_ecs_task_execution_role_name" {
 output "preview_ecs_infrastructure_role_name" {
   value = aws_iam_role.ecs_infrastructure.name
 }
+
+output "preview_ecs_task_role_name" {
+  value = aws_iam_role.ecs_task_role.name
+  description = "The IAM role you use to give your application to other AWS services"
+}
