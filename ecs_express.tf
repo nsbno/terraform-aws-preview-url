@@ -1,3 +1,5 @@
+data "aws_region" "current" {}
+data "aws_caller_identity" "current" {}
 
 resource "aws_iam_role" "ecs_execution" {
   name = "${var.service_name}-preview-ecs-execution"
@@ -34,8 +36,8 @@ data "aws_iam_policy_document" "allow_preview_to_access_ssm_parameters" {
     ]
 
     resources = [
-      // TODO(Fredrik) modify this to only allow certain prefixes
-      "*"
+      // Grant the ECS service access to the parameters that it owns and only those
+      "arn:aws:ssm:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:parameter/__${var.service_name}__/*"
     ]
   }
 }
