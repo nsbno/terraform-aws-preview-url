@@ -103,7 +103,7 @@ resource "aws_iam_role_policy" "lambda_logging" {
 resource "aws_cloudwatch_log_group" "lambda_log_group" {
   provider = aws.us_east_1
 
-  name              = "/aws/lambda/${var.service_name}"
+  name              = "/aws/lambda/${var.service_name}-${local.central_lambda_name}"
   retention_in_days = 30
 }
 
@@ -134,6 +134,8 @@ resource "aws_lambda_function" "lambda_function" {
       version
     ]
   }
+
+  depends_on = [aws_cloudwatch_log_group.lambda_log_group]
 }
 
 data "aws_lambda_function" "this" {
