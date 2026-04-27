@@ -75,19 +75,20 @@ resource "aws_iam_role" "lambda_role" {
 }
 
 # CloudWatch Logs Policy
+# Lambda@Edge replicas execute in the region closest to the viewer and write
+# logs to `/aws/lambda/us-east-1.<function-name>` in that region, so the role
+# needs to be able to create log groups/streams in any region.
 data "aws_iam_policy_document" "lambda_logging" {
   statement {
     effect = "Allow"
 
     actions = [
+      "logs:CreateLogGroup",
       "logs:CreateLogStream",
       "logs:PutLogEvents",
     ]
 
-    resources = [
-      aws_cloudwatch_log_group.lambda_log_group.arn,
-      "${aws_cloudwatch_log_group.lambda_log_group.arn}:*",
-    ]
+    resources = ["arn:aws:logs:*:*:*"]
   }
 }
 
