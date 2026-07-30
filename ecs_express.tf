@@ -88,3 +88,11 @@ resource "aws_iam_role" "ecs_task_role" {
     ]
   })
 }
+
+// Create needed resources if Shared VPC is used for previews:
+module "shared_vpc_frontend_preview" {
+  count = var.use_shared_vpc ? 1 : 0
+
+  source       = "./modules/shared_vpc_frontend_preview"
+  service_name = var.service_name
+}
