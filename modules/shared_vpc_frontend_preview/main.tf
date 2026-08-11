@@ -4,14 +4,14 @@ data "aws_vpc" "shared" {
   }
 }
 
-data "aws_subnets" "private" {
+data "aws_subnets" "public" {
   filter {
     name   = "vpc-id"
     values = [data.aws_vpc.shared.id]
   }
 
   tags = {
-    Tier = "Private"
+    Tier = "Public"
   }
 }
 
@@ -44,7 +44,8 @@ resource "aws_ssm_parameter" "frontend_preview_security_group_id" {
 
 resource "aws_ssm_parameter" "frontend_preview_subnet_ids" {
   name      = "/config/shared/frontend_preview_subnet_ids"
-  value     = join(",", data.aws_subnets.private.ids)
+  value     = join(",", data.aws_subnets.public.ids)
   type      = "String"
   overwrite = true
 }
+
