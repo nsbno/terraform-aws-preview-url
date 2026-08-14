@@ -43,7 +43,7 @@ resource "aws_ssm_parameter" "frontend_preview_security_group_id" {
 }
 
 resource "aws_ssm_parameter" "frontend_preview_subnet_ids" {
-  name      = "/__deployment__/shared/frontend_preview_subnet_ids"
+  name      = "/__deployment__/${var.service_name}/frontend_preview_subnet_ids"
   value     = join(",", data.aws_subnets.public.ids)
   type      = "String"
   overwrite = true
