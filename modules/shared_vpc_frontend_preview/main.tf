@@ -21,10 +21,10 @@ resource "aws_security_group" "frontend_preview" {
   vpc_id      = data.aws_vpc.shared.id
 
   ingress {
-    description = "App port from within VPC"
-    from_port   = 3000
-    to_port     = 3000
-    protocol    = "tcp"
+    description = "All traffic from within VPC"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
     cidr_blocks = [data.aws_vpc.shared.cidr_block]
   }
 
