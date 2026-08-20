@@ -24,3 +24,9 @@ variable "service_name" {
   description = "The name of the service, should be same as the service name in the GHA Pipeline"
   type        = string
 }
+
+variable "use_shared_vpc" {
+  description = "Used to add resources needed for using Shared VPC with frontend previews"
+  type = bool
+  default = false
+}
